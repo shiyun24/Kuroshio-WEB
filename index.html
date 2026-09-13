@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="ja">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kuroshio — 日本語の情報がまだ無いもの</title>
+<style>
+  :root{--fg:#1a1a1a;--dim:#6b7280;--line:#e5e7eb;--bg:#fff;--card:#fafafa;--accent:#0a7;}
+  @media (prefers-color-scheme:dark){
+    :root{--fg:#e8e8e8;--dim:#9aa0aa;--line:#2a2d33;--bg:#15171a;--card:#1b1e22;--accent:#4ade80;}
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+       font:15px/1.6 system-ui,-apple-system,"Segoe UI","Noto Sans JP",sans-serif}
+  .wrap{max-width:1150px;margin:0 auto;padding:2rem 1rem 4rem}
+  h1{font-size:1.5rem;margin:0 0 .3rem}
+  .lead{color:var(--dim);margin:0 0 1.5rem;font-size:.9rem}
+  .bar{display:flex;gap:.75rem;flex-wrap:wrap;align-items:center;margin-bottom:1rem}
+  .bar:last-of-type{margin-bottom:1.5rem}
+  .chips{display:flex;gap:.4rem;flex-wrap:wrap;align-items:center}
+  .chips .lbl{color:var(--dim);font-size:.8rem;margin-right:.2rem}
+  .chip{padding:.35rem .7rem;border:1px solid var(--line);border-radius:999px;
+        background:transparent;color:var(--dim);font:inherit;font-size:.82rem;
+        cursor:pointer;line-height:1.2}
+  .chip:hover{color:var(--fg)}
+  .chip[aria-pressed="true"]{border-color:var(--accent);color:var(--accent);
+                             background:color-mix(in srgb,var(--accent) 10%,transparent)}
+  .chip .n{opacity:.7;margin-left:.3rem;font-variant-numeric:tabular-nums}
+  input{flex:1;min-width:220px;padding:.55rem .75rem;border:1px solid var(--line);
+        border-radius:6px;background:transparent;color:inherit;font-size:.9rem}
+  .count{color:var(--dim);font-size:.85rem}
+
+  section{margin-bottom:2.5rem}
+  .src{background:var(--card);border:1px solid var(--line);border-radius:8px 8px 0 0;
+       padding:.9rem 1rem;border-bottom:0}
+  .src h2{margin:0;font-size:1.05rem;display:flex;align-items:baseline;gap:.6rem;flex-wrap:wrap}
+  .src h2 a{text-decoration:none}
+  .src h2 .n{font-size:.8rem;font-weight:400;color:var(--dim)}
+  .src p{margin:.35rem 0 0;font-size:.82rem;color:var(--dim)}
+
+  .scroll{overflow-x:auto;border:1px solid var(--line);border-radius:0 0 8px 8px}
+  table{border-collapse:collapse;width:100%;font-size:.88rem}
+  th,td{padding:.55rem .7rem;text-align:left;border-bottom:1px solid var(--line);
+        white-space:nowrap}
+  th{cursor:pointer;user-select:none;font-weight:600;color:var(--dim);font-size:.78rem}
+  th:hover{color:var(--fg)}
+  tr:last-child td{border-bottom:0}
+  td.desc{white-space:normal;min-width:20rem;color:var(--dim)}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .tag{display:inline-block;padding:.05rem .4rem;border:1px solid var(--line);
+       border-radius:4px;font-size:.75rem;color:var(--dim)}
+  .warn{border-color:var(--accent);color:var(--accent)}
+  footer{margin-top:2rem;padding-top:1rem;border-top:1px solid var(--line);
+         color:var(--dim);font-size:.8rem;line-height:1.9}
+</style>
+<div class="wrap">
+  <h1>Kuroshio</h1>
+  <p class="lead">
+    海外で定着しているのに、日本語の情報がまだ見つからないもの。<br>
+    数字とリンクだけを並べています。説明は原文のまま、翻訳していません。
+  </p>
+
+  <div class="bar">
+    <div class="chips" id="src">
+      <span class="lbl">引用元</span>
+      <button class="chip" type="button" data-src="github" aria-pressed="true">GitHub<span class="n">18</span></button>
+    </div>
+  </div>
+
+  <div class="bar">
+    <input id="q" type="search" placeholder="絞り込み（名前・説明・言語）" autocomplete="off">
+    <span class="count" id="count"></span>
+  </div>
+
+  <section>
+    <div class="src">
+      <h2><a href="https://github.com" rel="noopener">GitHub</a>
+          <span class="n">18 件 ・ 2026-09-13 更新</span></h2>
+      <p>公開リポジトリの star 数・作成日・説明文。GitHub REST API から取得。</p>
+    </div>
+    <div class="scroll">
+    <table>
+      <thead><tr>
+        <th data-k="name">名前</th>
+        <th data-k="desc">説明（原文）</th>
+        <th data-k="stars" class="num">star</th>
+        <th data-k="recent" class="num">直近8週</th>
+        <th data-k="age" class="num">経過日</th>
+        <th data-k="lang">言語</th>
+        <th data-k="script">説明の言語</th>
+        <th data-k="ja">日本語情報</th>
+      </tr></thead>
+      <tbody>
+        <tr data-src="github" data-search="qist/tvbox ok影视、tvbox配置文件，如果喜欢，请fork自用。使用前请仔细阅读仓库说明，一旦使用将被视为你已了解。 javascript 中国語" data-name="qist/tvbox" data-desc="OK影视、tvbox配置文件，如果喜欢，请Fork自用。使用前请仔细阅读仓库说明，一旦使用将被视为你已了解。"
+            data-stars="11260" data-recent="910" data-age="1111"
+            data-lang="JavaScript" data-script="zh" data-ja="none">
+          <td><a href="https://github.com/qist/tvbox" rel="noopener">qist/tvbox</a></td>
+          <td class="desc">OK影视、tvbox配置文件，如果喜欢，请Fork自用。使用前请仔细阅读仓库说明，一旦使用将被视为你已了解。</td>
+          <td class="num">11,260</td>
+          <td class="num">910</td>
+          <td class="num">1111</td>
+          <td><span class="tag">JavaScript</span></td>
+          <td><span class="tag">中国語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="anomalyco/models.dev an open-source database of ai models. typescript 英語" data-name="anomalyco/models.dev" data-desc="An open-source database of AI models."
+            data-stars="6832" data-recent="906" data-age="465"
+            data-lang="TypeScript" data-script="en" data-ja="few">
+          <td><a href="https://github.com/anomalyco/models.dev" rel="noopener">anomalyco/models.dev</a></td>
+          <td class="desc">An open-source database of AI models.</td>
+          <td class="num">6,832</td>
+          <td class="num">906</td>
+          <td class="num">465</td>
+          <td><span class="tag">TypeScript</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">ほぼ無し</span></td>
+        </tr>
+        <tr data-src="github" data-search="stickerdaniel/linkedin-mcp-server open-source mcp server for linkedin. give claude and any mcp-compatible ai agent access to profiles, companies, jobs, and messages. python 英語" data-name="stickerdaniel/linkedin-mcp-server" data-desc="Open-source MCP server for LinkedIn. Give Claude and any MCP-compatible AI agent access to profiles, companies, jobs, and messages."
+            data-stars="3450" data-recent="650" data-age="518"
+            data-lang="Python" data-script="en" data-ja="none">
+          <td><a href="https://github.com/stickerdaniel/linkedin-mcp-server" rel="noopener">stickerdaniel/linkedin-mcp-server</a></td>
+          <td class="desc">Open-source MCP server for LinkedIn. Give Claude and any MCP-compatible AI agent access to profiles, companies, jobs, and messages.</td>
+          <td class="num">3,450</td>
+          <td class="num">650</td>
+          <td class="num">518</td>
+          <td><span class="tag">Python</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="gmh5225/awesome-game-security awesome game security [welcome to pr] python 英語" data-name="gmh5225/awesome-game-security" data-desc="awesome game security [Welcome to PR]"
+            data-stars="3509" data-recent="275" data-age="1623"
+            data-lang="Python" data-script="en" data-ja="none">
+          <td><a href="https://github.com/gmh5225/awesome-game-security" rel="noopener">gmh5225/awesome-game-security</a></td>
+          <td class="desc">awesome game security [Welcome to PR]</td>
+          <td class="num">3,509</td>
+          <td class="num">275</td>
+          <td class="num">1623</td>
+          <td><span class="tag">Python</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="witnessmenow/esp32-cheap-yellow-display building a community around a cheap esp32 display with a touch screen rust 英語" data-name="witnessmenow/ESP32-Cheap-Yellow-Display" data-desc="Building a community around a cheap ESP32 Display with a touch screen"
+            data-stars="4431" data-recent="202" data-age="1212"
+            data-lang="Rust" data-script="en" data-ja="few">
+          <td><a href="https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display" rel="noopener">witnessmenow/ESP32-Cheap-Yellow-Display</a></td>
+          <td class="desc">Building a community around a cheap ESP32 Display with a touch screen</td>
+          <td class="num">4,431</td>
+          <td class="num">202</td>
+          <td class="num">1212</td>
+          <td><span class="tag">Rust</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">ほぼ無し</span></td>
+        </tr>
+        <tr data-src="github" data-search="ebrasha/free-v2ray-public-list a simple and always-updated list of free, working v2ray servers. including ss, ssr, trojan, vless, vmess, tuic, and hysteria2. just copy, paste, and connect — no signup, no payment, no nonsense. ⏰ updated every 15 minutes . also on telegram: https://t.me/abdalv2raybot  英語" data-name="ebrasha/free-v2ray-public-list" data-desc="A simple and always-updated list of free, working V2Ray servers. including SS, SSR, Trojan, VLESS, VMess, TUIC, and Hysteria2. Just copy, paste, and connect — no signup, no payment, no nonsense. ⏰ Updated every 15 minutes . Also on Telegram: https://t.me/AbdalV2rayBot"
+            data-stars="1287" data-recent="199" data-age="443"
+            data-lang="" data-script="en" data-ja="none">
+          <td><a href="https://github.com/ebrasha/free-v2ray-public-list" rel="noopener">ebrasha/free-v2ray-public-list</a></td>
+          <td class="desc">A simple and always-updated list of free, working V2Ray servers. including SS, SSR, Trojan, VLESS, VMess, TUIC, and Hysteria2. Just copy, paste, and connect — no signup, no payment, no nonsense. ⏰ Updated every 15 minutes . Also on Telegram: https://t.me/AbdalV2rayBot</td>
+          <td class="num">1,287</td>
+          <td class="num">199</td>
+          <td class="num">443</td>
+          <td></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="zapplyjobs/new-grad-jobs-2027 2027 entry-level jobs in tech, finance, healthcare &amp; more — new grad us roles across software, business, operations &amp; beyond html 英語" data-name="zapplyjobs/New-Grad-Jobs-2027" data-desc="2027 entry-level jobs in tech, finance, healthcare &amp; more — new grad US roles across software, business, operations &amp; beyond"
+            data-stars="1543" data-recent="144" data-age="1411"
+            data-lang="HTML" data-script="en" data-ja="none">
+          <td><a href="https://github.com/zapplyjobs/New-Grad-Jobs-2027" rel="noopener">zapplyjobs/New-Grad-Jobs-2027</a></td>
+          <td class="desc">2027 entry-level jobs in tech, finance, healthcare &amp; more — new grad US roles across software, business, operations &amp; beyond</td>
+          <td class="num">1,543</td>
+          <td class="num">144</td>
+          <td class="num">1411</td>
+          <td><span class="tag">HTML</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="mthcht/awesome-lists awesome security lists for soc/cert/cti yara 英語" data-name="mthcht/awesome-lists" data-desc="Awesome Security lists for SOC/CERT/CTI"
+            data-stars="1915" data-recent="142" data-age="1372"
+            data-lang="YARA" data-script="en" data-ja="none">
+          <td><a href="https://github.com/mthcht/awesome-lists" rel="noopener">mthcht/awesome-lists</a></td>
+          <td class="desc">Awesome Security lists for SOC/CERT/CTI</td>
+          <td class="num">1,915</td>
+          <td class="num">142</td>
+          <td class="num">1372</td>
+          <td><span class="tag">YARA</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="cveproject/cvelistv5 cve cache of the official cve list in cve json 5 format  英語" data-name="CVEProject/cvelistV5" data-desc="CVE cache of the official CVE List in CVE JSON 5 format"
+            data-stars="2984" data-recent="139" data-age="1678"
+            data-lang="" data-script="en" data-ja="few">
+          <td><a href="https://github.com/CVEProject/cvelistV5" rel="noopener">CVEProject/cvelistV5</a></td>
+          <td class="desc">CVE cache of the official CVE List in CVE JSON 5 format</td>
+          <td class="num">2,984</td>
+          <td class="num">139</td>
+          <td class="num">1678</td>
+          <td></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">ほぼ無し</span></td>
+        </tr>
+        <tr data-src="github" data-search="sqlmesh/sqlmesh scalable and efficient data transformation framework - backwards compatible with dbt. python 英語" data-name="SQLMesh/sqlmesh" data-desc="Scalable and efficient data transformation framework - backwards compatible with dbt."
+            data-stars="3284" data-recent="88" data-age="1450"
+            data-lang="Python" data-script="en" data-ja="few">
+          <td><a href="https://github.com/SQLMesh/sqlmesh" rel="noopener">SQLMesh/sqlmesh</a></td>
+          <td class="desc">Scalable and efficient data transformation framework - backwards compatible with dbt.</td>
+          <td class="num">3,284</td>
+          <td class="num">88</td>
+          <td class="num">1450</td>
+          <td><span class="tag">Python</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">ほぼ無し</span></td>
+        </tr>
+        <tr data-src="github" data-search="blendlog/minersearch program designed for search and kill silent miners c# 英語" data-name="BlendLog/MinerSearch" data-desc="Program designed for search and kill silent miners"
+            data-stars="1425" data-recent="83" data-age="1317"
+            data-lang="C#" data-script="en" data-ja="none">
+          <td><a href="https://github.com/BlendLog/MinerSearch" rel="noopener">BlendLog/MinerSearch</a></td>
+          <td class="desc">Program designed for search and kill silent miners</td>
+          <td class="num">1,425</td>
+          <td class="num">83</td>
+          <td class="num">1317</td>
+          <td><span class="tag">C#</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="ymyuuu/ipdb cloudflare反代优选ip库  中国語" data-name="ymyuuu/IPDB" data-desc="Cloudflare反代优选IP库"
+            data-stars="2565" data-recent="61" data-age="1035"
+            data-lang="" data-script="zh" data-ja="none">
+          <td><a href="https://github.com/ymyuuu/IPDB" rel="noopener">ymyuuu/IPDB</a></td>
+          <td class="desc">Cloudflare反代优选IP库</td>
+          <td class="num">2,565</td>
+          <td class="num">61</td>
+          <td class="num">1035</td>
+          <td></td>
+          <td><span class="tag">中国語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="xingpingcn/enhanced-faas-in-china 提升部署在cloudflare、vercel或netlify的网页在中国的访问速度和稳定性   cf优选域名 | cf优选ip | cloudflare | vercel | netlify | 加速 | 国内 | 中国 | 境内 | 大陆 python 中国語" data-name="xingpingcn/enhanced-FaaS-in-China" data-desc="提升部署在cloudflare、vercel或netlify的网页在中国的访问速度和稳定性   cf优选域名 | cf优选ip | cloudflare | vercel | netlify | 加速 | 国内 | 中国 | 境内 | 大陆"
+            data-stars="3088" data-recent="57" data-age="920"
+            data-lang="Python" data-script="zh" data-ja="none">
+          <td><a href="https://github.com/xingpingcn/enhanced-FaaS-in-China" rel="noopener">xingpingcn/enhanced-FaaS-in-China</a></td>
+          <td class="desc">提升部署在cloudflare、vercel或netlify的网页在中国的访问速度和稳定性   cf优选域名 | cf优选ip | cloudflare | vercel | netlify | 加速 | 国内 | 中国 | 境内 | 大陆</td>
+          <td class="num">3,088</td>
+          <td class="num">57</td>
+          <td class="num">920</td>
+          <td><span class="tag">Python</span></td>
+          <td><span class="tag">中国語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="martinus/unordered_dense a fast &amp; densely stored hashmap and hashset c++ 英語" data-name="martinus/unordered_dense" data-desc="A fast &amp; densely stored hashmap and hashset"
+            data-stars="1473" data-recent="54" data-age="1542"
+            data-lang="C++" data-script="en" data-ja="few">
+          <td><a href="https://github.com/martinus/unordered_dense" rel="noopener">martinus/unordered_dense</a></td>
+          <td class="desc">A fast &amp; densely stored hashmap and hashset</td>
+          <td class="num">1,473</td>
+          <td class="num">54</td>
+          <td class="num">1542</td>
+          <td><span class="tag">C++</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">ほぼ無し</span></td>
+        </tr>
+        <tr data-src="github" data-search="ymir-emu/ymir sega saturn emulator c++ 英語" data-name="ymir-emu/Ymir" data-desc="Sega Saturn emulator"
+            data-stars="1044" data-recent="54" data-age="503"
+            data-lang="C++" data-script="en" data-ja="none">
+          <td><a href="https://github.com/ymir-emu/Ymir" rel="noopener">ymir-emu/Ymir</a></td>
+          <td class="desc">Sega Saturn emulator</td>
+          <td class="num">1,044</td>
+          <td class="num">54</td>
+          <td class="num">503</td>
+          <td><span class="tag">C++</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="tencentcloudbase/cloudbase-ai-toolkit backend for ai coding agents on cloudbase — database, auth, functions via plugin, skills &amp; mcp. typescript 英語" data-name="TencentCloudBase/CloudBase-AI-Toolkit" data-desc="Backend for AI coding agents on CloudBase — database, auth, functions via Plugin, Skills &amp; MCP."
+            data-stars="1104" data-recent="48" data-age="478"
+            data-lang="TypeScript" data-script="en" data-ja="none">
+          <td><a href="https://github.com/TencentCloudBase/CloudBase-AI-Toolkit" rel="noopener">TencentCloudBase/CloudBase-AI-Toolkit</a></td>
+          <td class="desc">Backend for AI coding agents on CloudBase — database, auth, functions via Plugin, Skills &amp; MCP.</td>
+          <td class="num">1,104</td>
+          <td class="num">48</td>
+          <td class="num">478</td>
+          <td><span class="tag">TypeScript</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="sinamics/ztnet ztnet - zerotier web ui for private controllers with multiuser and organization support. typescript 英語" data-name="sinamics/ztnet" data-desc="ZTNET - ZeroTier Web UI for Private Controllers with Multiuser and Organization Support."
+            data-stars="1236" data-recent="42" data-age="1266"
+            data-lang="TypeScript" data-script="en" data-ja="none">
+          <td><a href="https://github.com/sinamics/ztnet" rel="noopener">sinamics/ztnet</a></td>
+          <td class="desc">ZTNET - ZeroTier Web UI for Private Controllers with Multiuser and Organization Support.</td>
+          <td class="num">1,236</td>
+          <td class="num">42</td>
+          <td class="num">1266</td>
+          <td><span class="tag">TypeScript</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+        <tr data-src="github" data-search="i365dev/free4chat free4chat provides the temporary boundary. participants bring the capabilities. typescript 英語" data-name="i365dev/free4chat" data-desc="Free4Chat provides the temporary boundary. Participants bring the capabilities."
+            data-stars="1161" data-recent="8" data-age="1778"
+            data-lang="TypeScript" data-script="en" data-ja="none">
+          <td><a href="https://github.com/i365dev/free4chat" rel="noopener">i365dev/free4chat</a></td>
+          <td class="desc">Free4Chat provides the temporary boundary. Participants bring the capabilities.</td>
+          <td class="num">1,161</td>
+          <td class="num">8</td>
+          <td class="num">1778</td>
+          <td><span class="tag">TypeScript</span></td>
+          <td><span class="tag">英語</span></td>
+          <td><span class="tag">見つからず</span></td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <footer>
+    公開 18 件（保留 11 件・除外 68 件は出していません）。
+    最終更新は引用元ごとに見出しへ出しています。<br>
+    <strong>「日本語情報」の見方。</strong>
+    README・説明文・issue に日本語があるか、はてなブックマークが付いているかを見ています。
+    <span class="tag warn">未確認</span> は、そこまでで引っかからなかっただけで、
+    <strong>日本語の解説記事があるかは確かめていません。</strong><br>
+    「説明の言語」は説明文の文字体系です。英語以外も除外せずに並べています。<br>
+    数値はいずれも取得時点のもの。<strong>網羅的な調査ではありません。</strong>
+  </footer>
+</div>
+<script>
+const rows=[...document.querySelectorAll('tbody tr')];
+const q=document.getElementById('q'), count=document.getElementById('count');
+const chips=[...document.querySelectorAll('#src .chip[data-src]')];
+const all=document.querySelector('#src .chip[data-all]');
+const active=new Set(chips.map(c=>c.dataset.src));
+function paint(){
+  for(const c of chips) c.setAttribute('aria-pressed', active.has(c.dataset.src));
+  if(all) all.setAttribute('aria-pressed', active.size===chips.length);
+}
+function refresh(){
+  const s=q.value.trim().toLowerCase();
+  let n=0;
+  for(const r of rows){
+    const hit=active.has(r.dataset.src)&&(!s||r.dataset.search.includes(s));
+    r.hidden=!hit; if(hit)n++;
+  }
+  count.textContent=n+' 件';
+  for(const sec of document.querySelectorAll('section')){
+    sec.hidden=![...sec.querySelectorAll('tbody tr')].some(r=>!r.hidden);
+  }
+  paint();
+}
+for(const c of chips) c.addEventListener('click',()=>{
+  const k=c.dataset.src;
+  if(active.has(k)&&active.size>1) active.delete(k);
+  else if(active.has(k)) { active.clear(); for(const o of chips) if(o!==c) active.add(o.dataset.src); }
+  else active.add(k);
+  if(active.size===0) for(const o of chips) active.add(o.dataset.src);
+  refresh();
+});
+if(all) all.addEventListener('click',()=>{
+  for(const c of chips) active.add(c.dataset.src);
+  refresh();
+});
+q.addEventListener('input',refresh); refresh();
+const dir={};
+for(const th of document.querySelectorAll('th')){
+  th.addEventListener('click',()=>{
+    const k=th.dataset.k, body=th.closest('table').querySelector('tbody');
+    dir[k]=!dir[k];
+    [...body.querySelectorAll('tr')].sort((a,b)=>{
+      const x=a.dataset[k], y=b.dataset[k];
+      const nx=parseFloat(x), ny=parseFloat(y);
+      const c=(!isNaN(nx)&&!isNaN(ny))?nx-ny:String(x).localeCompare(String(y));
+      return dir[k]?c:-c;
+    }).forEach(r=>body.appendChild(r));
+  });
+}
+</script>
+</html>
